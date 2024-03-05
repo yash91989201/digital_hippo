@@ -10,12 +10,13 @@ import NavItems from "@/components/navbar/nav-items";
 import { Separator } from "@/components/ui/separator";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import useCurrentUser from "@/hooks/use-current-user";
+import { AUTH_ROUTES } from "@/constants/routes";
 
 export default function Navbar() {
   const pathname = usePathname();
   const user = useCurrentUser();
 
-  if (["/log-in", "/sign-up"].includes(pathname)) return null;
+  if (AUTH_ROUTES.includes(pathname)) return null;
 
   return (
     <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
