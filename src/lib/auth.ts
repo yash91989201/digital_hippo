@@ -18,6 +18,9 @@ export const lucia = new Lucia(luciaDbAdapter, {
       name: attributes.name,
       email: attributes.email,
       role: attributes.role,
+      emailVerified: attributes.emailVerified,
+      twoFactorEnabled: attributes.twoFactorEnabled,
+      imageUrl: attributes.imageUrl,
     };
   },
 });

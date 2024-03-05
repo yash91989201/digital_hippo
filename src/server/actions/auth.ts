@@ -1,13 +1,29 @@
 "use server";
 import { generateId } from "lucia";
-import { UserLogInSchema, UserSignUpSchema } from "@/lib/schema";
-import type { UserLogInType, UserSignUpType } from "@/lib/schema";
-
-import { db } from "@/server/db";
-import { userTable } from "@/server/db/schema";
-import { lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
+// UTILS
+import { db } from "@/server/db";
+import { lucia } from "@/lib/auth";
+import {
+  generateVerificationToken,
+  getVerificationTokenByToken,
+} from "@/server/helpers/token";
 import { getUserByEmail, hashPassword, verifyPassword } from "@/server/helpers";
+// SCHEMAS
+import { userTable, verificationTokenTable } from "@/server/db/schema";
+import {
+  NewVerificationSchema,
+  UserLogInSchema,
+  UserSignUpSchema,
+} from "@/lib/schema";
+// TYPES
+import type {
+  NewVerificationType,
+  UserLogInType,
+  UserSignUpType,
+} from "@/lib/schema";
+import { sendVerificationEmail } from "@/server/helpers/email";
+import { eq } from "drizzle-orm";
 
 export async function signUp(
   payload: UserSignUpType,
@@ -19,7 +35,6 @@ export async function signUp(
   }
 
   const userId = generateId(15);
-
   const { email, name, password } = validatedPayload.data;
 
   const existingUser = await getUserByEmail(email);
@@ -38,14 +53,68 @@ export async function signUp(
       password: hashedPassword,
     });
 
-    if (insertUserQuery.affectedRows === 1) {
-      return { status: "SUCCESS", message: "Sign Up successful." };
+    if (insertUserQuery.affectedRows === 0) {
+      return { status: "FAILED", message: "Unable to signup." };
     }
 
-    return { status: "FAILED", message: "Unable to signup." };
+    const verificationToken = await generateVerificationToken(email);
+
+    await sendVerificationEmail({
+      email,
+      subject: "Verify your email.",
+      userName: name,
+      verificationToken,
+    });
+
+    return { status: "SUCCESS", message: "Verification email sent." };
   } catch (e) {
     return { status: "FAILED", message: "Error occoured." };
   }
+}
+
+export async function newVerification(
+  payload: NewVerificationType,
+): Promise<NewVerificationStatusType> {
+  const validatedPayload = NewVerificationSchema.safeParse(payload);
+  if (!validatedPayload.success) {
+    return { status: "FAILED", message: "Invalid Token!" };
+  }
+
+  const { token } = validatedPayload.data;
+  const tokenData = await getVerificationTokenByToken(token);
+
+  if (!tokenData) {
+    return { status: "FAILED", message: "Invalid Token!" };
+  }
+
+  const { expiresAt, email } = tokenData;
+
+  const isTokenExpired = new Date(expiresAt) < new Date();
+  if (isTokenExpired) {
+    return { status: "FAILED", message: "Token Expired, please try again." };
+  }
+
+  const existingUser = await getUserByEmail(email);
+  if (!existingUser) {
+    return { status: "FAILED", message: "No user exists with this token!" };
+  }
+
+  const [updateUserquery] = await db
+    .update(userTable)
+    .set({ emailVerified: new Date() });
+
+  await db
+    .delete(verificationTokenTable)
+    .where(eq(verificationTokenTable.token, token));
+
+  if (updateUserquery.affectedRows == 0) {
+    return {
+      status: "FAILED",
+      message: "Unable to verify email, please try again.",
+    };
+  }
+
+  return { status: "SUCCESS", message: "Email Verified" };
 }
 
 export async function logIn(
@@ -61,6 +130,24 @@ export async function logIn(
 
   if (!existingUser) {
     return { status: "FAILED", message: "User doesnot exists!" };
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email,
+    );
+
+    await sendVerificationEmail({
+      email: existingUser.email,
+      subject: "Verify your email.",
+      userName: existingUser.name,
+      verificationToken,
+    });
+    return {
+      status: "FAILED",
+      message:
+        "Verify your email before logging in. Please check your inbox for verification email.",
+    };
   }
 
   const isPasswordCorrect = await verifyPassword(

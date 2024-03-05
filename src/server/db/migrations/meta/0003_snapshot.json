@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "c0c4a86c-e57d-4222-b3be-408e3ffd61ea",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "822f1da4-e2d1-4670-b6ad-ef47f453c3e8",
+  "prevId": "6cba3e96-ab74-4230-8069-37751b15949a",
   "tables": {
     "session": {
       "name": "session",
@@ -69,7 +69,7 @@
           "name": "name",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {
@@ -93,6 +93,28 @@
           "notNull": true,
           "autoincrement": false,
           "default": "'USER'"
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "two_factor_enabled": {
+          "name": "two_factor_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -110,13 +132,6 @@
     "verification_token": {
       "name": "verification_token",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
         "email": {
           "name": "email",
           "type": "varchar(255)",
@@ -141,14 +156,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "verification_token_id": {
-          "name": "verification_token_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "verification_token_email_unique": {
           "name": "verification_token_email_unique",

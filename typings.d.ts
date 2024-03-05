@@ -26,6 +26,10 @@ type UserSignUpErrorsType = {
   password?: string;
 };
 
+type NewVerificationErrorsType = {
+  token: string;
+};
+
 type UserSignUpStatusType =
   | FormInitialType<UserSignUpErrorsType>
   | FormSuccessType
@@ -35,6 +39,11 @@ type UserLogInStatusType =
   | FormInitialType<UserLogInErrorsType>
   | FormSuccessType
   | FormFailType<UserLogInErrorsType>;
+
+type NewVerificationStatusType =
+  | FormInitialType<NewVerificationErrorsType>
+  | FormSuccessType
+  | FormFailType<NewVerificationErrorsType>;
 
 type AuthCardWrapperProps = {
   children: React.ReactNode;

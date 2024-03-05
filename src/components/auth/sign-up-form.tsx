@@ -21,6 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AuthCardWrapper from "@/components/shared/auth-card-wrapper";
+// ICONS
+import { Loader2 } from "lucide-react";
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -28,14 +30,19 @@ export default function SignUpForm() {
   const signUpForm = useForm<UserSignUpType>({
     resolver: zodResolver(UserSignUpSchema),
   });
-  const { control, handleSubmit } = signUpForm;
+  const { control, handleSubmit, formState } = signUpForm;
 
   const signUpAction: SubmitHandler<UserSignUpType> = async (data) => {
     const actionResponse = await signUp(data);
 
-    toast.info(actionResponse.message);
     if (actionResponse.status === "SUCCESS") {
-      router.push("/auth/log-in");
+      toast.success(actionResponse.message);
+      setTimeout(() => {
+        router.replace("/log-in");
+      }, 3000);
+    }
+    if (actionResponse.status === "FAILED") {
+      toast.error(actionResponse.message);
     }
   };
 
@@ -93,7 +100,10 @@ export default function SignUpForm() {
               </FormItem>
             )}
           />
-          <Button className="w-full text-lg font-medium">SignUp</Button>
+          <Button className="flex w-full items-center justify-center gap-3 text-lg font-medium">
+            <span>Sign Up</span>
+            {formState.isSubmitting && <Loader2 className="animate-spin" />}
+          </Button>
         </form>
       </Form>
     </AuthCardWrapper>

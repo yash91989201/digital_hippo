@@ -5,20 +5,28 @@ import { userTable } from "@/server/db/schema";
 // TYPES
 import type { Session } from "lucia";
 
-const UserSchema = createSelectSchema(userTable);
+export const UserSchema = createSelectSchema(userTable);
 
-const UserSignUpSchema = z.object({
+export const UserSignUpSchema = z.object({
   name: z.string(),
   email: z.string(),
   password: z.string(),
 });
 
-const UserLogInSchema = z.object({
+export const UserLogInSchema = z.object({
   email: z.string(),
   password: z.string(),
 });
 
-type UserSessionType =
+export const NewVerificationSchema = z.object({
+  token: z.string(),
+});
+
+export type UserType = z.infer<typeof UserSchema>;
+export type UserSignUpType = z.infer<typeof UserSignUpSchema>;
+export type UserLogInType = z.infer<typeof UserLogInSchema>;
+export type NewVerificationType = z.infer<typeof NewVerificationSchema>;
+export type UserSessionType =
   | {
       user: Omit<UserType, "password">;
       session: Session;
@@ -27,11 +35,3 @@ type UserSessionType =
       user: null;
       session: null;
     };
-
-type UserType = z.infer<typeof UserSchema>;
-type UserSignUpType = z.infer<typeof UserSignUpSchema>;
-type UserLogInType = z.infer<typeof UserLogInSchema>;
-
-export { UserSchema, UserSignUpSchema, UserLogInSchema };
-
-export type { UserType, UserSignUpType, UserLogInType, UserSessionType };

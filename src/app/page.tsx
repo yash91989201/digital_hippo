@@ -1,6 +1,6 @@
-import { Link } from "lucide-react";
+import Link from "next/link";
 // CUSTOM COMPONENTS
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 // CONSTANTS
 import { PERKS } from "@/constants";
@@ -19,9 +19,9 @@ export default async function Home() {
             our team to ensure our highest quality standards
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-            <Button className="" size="lg">
-              <Link href="/products">Browse Trending</Link>
-            </Button>
+            <Link href="/products" className={buttonVariants()}>
+              Browse Trending
+            </Link>
             <Button variant="secondary">Our quality promise &rarr;</Button>
           </div>
         </div>

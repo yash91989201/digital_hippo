@@ -11,6 +11,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    RESEND_API_KEY: z.string().min(1),
+    SITE_URL: z.string().url(),
+    MAIL_SENDER_ADDRESS: z.string().email(),
   },
 
   /**
@@ -27,8 +30,11 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    SITE_URL: process.env.SITE_URL,
+    MAIL_SENDER_ADDRESS: process.env.MAIL_SENDER_ADDRESS,
+    DATABASE_URL: process.env.DATABASE_URL,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

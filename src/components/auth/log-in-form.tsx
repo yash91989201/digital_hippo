@@ -21,6 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AuthCardWrapper from "@/components/shared/auth-card-wrapper";
+// ICONS
+import { Loader2 } from "lucide-react";
 
 export default function LogInForm() {
   const router = useRouter();
@@ -29,14 +31,19 @@ export default function LogInForm() {
     resolver: zodResolver(UserLogInSchema),
     shouldUseNativeValidation: true,
   });
-  const { control, handleSubmit } = signUpForm;
+  const { formState, control, handleSubmit } = signUpForm;
 
   const signUpAction: SubmitHandler<UserLogInType> = async (formData) => {
     const actionResponse = await logIn(formData);
 
-    toast.info(actionResponse.message);
     if (actionResponse.status === "SUCCESS") {
-      router.push("/protected");
+      toast.success(actionResponse.message);
+      setTimeout(() => {
+        router.replace("/");
+      }, 3000);
+    }
+    if (actionResponse.status === "FAILED") {
+      toast.error(actionResponse.message);
     }
   };
 
@@ -47,7 +54,7 @@ export default function LogInForm() {
       backButtonHref="/sign-up"
     >
       <Form {...signUpForm}>
-        <form onSubmit={handleSubmit(signUpAction)}>
+        <form className="space-y-3" onSubmit={handleSubmit(signUpAction)}>
           <FormField
             name="email"
             control={control}
@@ -80,7 +87,10 @@ export default function LogInForm() {
               </FormItem>
             )}
           />
-          <Button>SignUp</Button>
+          <Button className="flex w-full items-center justify-center gap-3 text-lg font-medium">
+            <span>Log In</span>
+            {formState.isSubmitting && <Loader2 className="animate-spin" />}
+          </Button>
         </form>
       </Form>
     </AuthCardWrapper>

@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "c0c4a86c-e57d-4222-b3be-408e3ffd61ea",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "6cba3e96-ab74-4230-8069-37751b15949a",
+  "prevId": "0ba1a8ea-04a8-4dcc-91eb-3c1743ebda31",
   "tables": {
     "session": {
       "name": "session",
@@ -93,6 +93,28 @@
           "notNull": true,
           "autoincrement": false,
           "default": "'USER'"
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "two_factor_enabled": {
+          "name": "two_factor_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
