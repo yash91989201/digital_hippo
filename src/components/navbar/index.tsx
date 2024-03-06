@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// CUSTOM HOOKS
+import useCurrentUser from "@/hooks/use-current-user";
 // UTILS
 import { buttonVariants } from "@/components/ui/button";
 // CUSTOM COMPONENTS
@@ -9,14 +10,9 @@ import { Icons } from "@/components/shared/icons";
 import NavItems from "@/components/navbar/nav-items";
 import { Separator } from "@/components/ui/separator";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
-import useCurrentUser from "@/hooks/use-current-user";
-import { AUTH_ROUTES } from "@/constants/routes";
 
 export default function Navbar() {
-  const pathname = usePathname();
   const user = useCurrentUser();
-
-  if (AUTH_ROUTES.includes(pathname)) return null;
 
   return (
     <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white">

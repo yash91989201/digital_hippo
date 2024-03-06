@@ -49,7 +49,7 @@ export default function SignUpForm() {
   return (
     <AuthCardWrapper
       headerLabel="Create an account."
-      backButtonLabel="Already have an account?"
+      backButtonLabel="Already have an account? Log In"
       backButtonHref="/log-in"
     >
       <Form {...signUpForm}>

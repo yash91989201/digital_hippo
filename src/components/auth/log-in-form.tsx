@@ -50,7 +50,7 @@ export default function LogInForm() {
   return (
     <AuthCardWrapper
       headerLabel="Welcome Back!"
-      backButtonLabel="Don't have an account?"
+      backButtonLabel="Don't have an account? Sign Up"
       backButtonHref="/sign-up"
     >
       <Form {...signUpForm}>

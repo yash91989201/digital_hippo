@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+// UTILS
+import { buttonVariants } from "@/components/ui/button";
 // CUSTOM COMPONENTS
 import {
   Card,
@@ -7,7 +9,8 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+// ICONS
+import { ArrowRight } from "lucide-react";
 import { Icons } from "@/components/shared/icons";
 
 export default function AuthCardWrapper({
@@ -17,24 +20,27 @@ export default function AuthCardWrapper({
   backButtonHref,
 }: AuthCardWrapperProps) {
   return (
-    <Card className="w-[80vw] shadow-lg md:max-w-[480px]">
+    <Card className="w-[96vw] border-0 shadow-none md:max-w-[480px]">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
         <Link href="/">
-          <Icons.logo className="h-16 w-16" />
+          <Icons.logo className="h-18 w-18 lg:h-28 lg:w-28" />
         </Link>
-        <p className="text-base text-gray-500">{headerLabel}</p>
+        <p className="text-xl font-semibold">{headerLabel}</p>
       </CardHeader>
       <CardContent>{children}</CardContent>
       {backButtonLabel && backButtonHref && (
         <CardFooter className="flex flex-col gap-3">
-          <Button
-            variant="link"
-            className="w-full font-normal"
-            size="sm"
-            asChild
+          <Link
+            href={backButtonHref}
+            className={buttonVariants({
+              variant: "link",
+              size: "sm",
+              className: "flex items-center justify-center gap-2",
+            })}
           >
-            <Link href={backButtonHref}>{backButtonLabel}</Link>
-          </Button>
+            <span>{backButtonLabel}</span>
+            <ArrowRight className="size-4" />
+          </Link>
         </CardFooter>
       )}
     </Card>
