@@ -15,7 +15,7 @@ type FormFailType<ErrorsType> = {
   message: string;
 };
 
-type UserLogInErrorsType = {
+type UserSignInErrorsType = {
   email?: string;
   password?: string;
 };
@@ -35,10 +35,10 @@ type UserSignUpStatusType =
   | FormSuccessType
   | FormFailType<UserSignUpErrorsType>;
 
-type UserLogInStatusType =
-  | FormInitialType<UserLogInErrorsType>
+type UserSignInStatusType =
+  | FormInitialType<UserSignInErrorsType>
   | FormSuccessType
-  | FormFailType<UserLogInErrorsType>;
+  | FormFailType<UserSignInErrorsType>;
 
 type NewVerificationStatusType =
   | FormInitialType<NewVerificationErrorsType>
@@ -51,13 +51,3 @@ type AuthCardWrapperProps = {
   backButtonLabel?: string;
   backButtonHref?: string;
 };
-
-type UserSessionType =
-  | {
-      user: Omit<UserType, "password">;
-      session: Session;
-    }
-  | {
-      user: null;
-      session: null;
-    };

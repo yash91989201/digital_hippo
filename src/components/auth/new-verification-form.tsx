@@ -10,9 +10,10 @@ import { NewVerificationSchema } from "@/lib/schema";
 // TYPES
 import type { SubmitHandler } from "react-hook-form";
 import type { NewVerificationType } from "@/lib/schema";
-// CUSTOM COMPONENTS
+// UI
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+// CUSTOM COMPONENTS
 import AuthCardWrapper from "@/components/shared/auth-card-wrapper";
 // ICONS
 import { Loader2 } from "lucide-react";
@@ -37,7 +38,7 @@ export default function NewVerificationForm() {
     if (actionResponse.status === "SUCCESS") {
       toast.success(actionResponse.message);
       setTimeout(() => {
-        router.replace("/log-in");
+        router.replace("/sign-in");
       }, 3000);
     }
     if (actionResponse.status === "FAILED") {
@@ -48,8 +49,8 @@ export default function NewVerificationForm() {
   return (
     <AuthCardWrapper
       headerLabel="Email Verification"
-      backButtonHref="/log-in"
-      backButtonLabel="Log In to your account."
+      backButtonHref="/sign-in"
+      backButtonLabel="Sign In to your account."
     >
       <Form {...newVerificationForm}>
         <form

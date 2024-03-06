@@ -4,7 +4,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 // TYPES
 import type { PRODUCT_CATEGORIES } from "@/constants";
-// CUSTOM COMPONENTS
+// UI
 import { Button } from "@/components/ui/button";
 // ICONS
 import { ChevronDown } from "lucide-react";

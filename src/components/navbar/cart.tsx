@@ -4,7 +4,7 @@ import Image from "next/image";
 // UTILS
 import { formatPrice } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-// CUSTOM COMPONENTS
+// UI
 import {
   Sheet,
   SheetContent,

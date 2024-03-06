@@ -13,7 +13,7 @@ export const UserSignUpSchema = z.object({
   password: z.string(),
 });
 
-export const UserLogInSchema = z.object({
+export const UserSignInSchema = z.object({
   email: z.string(),
   password: z.string(),
 });
@@ -24,7 +24,7 @@ export const NewVerificationSchema = z.object({
 
 export type UserType = z.infer<typeof UserSchema>;
 export type UserSignUpType = z.infer<typeof UserSignUpSchema>;
-export type UserLogInType = z.infer<typeof UserLogInSchema>;
+export type UserSignInType = z.infer<typeof UserSignInSchema>;
 export type NewVerificationType = z.infer<typeof NewVerificationSchema>;
 export type UserSessionType =
   | {

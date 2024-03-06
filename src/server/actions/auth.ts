@@ -1,9 +1,12 @@
 "use server";
+import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 // UTILS
 import { db } from "@/server/db";
-import { lucia } from "@/lib/auth";
+import { lucia, validateRequest } from "@/lib/auth";
+import { sendVerificationEmail } from "@/server/helpers/email";
 import {
   generateVerificationToken,
   getVerificationTokenByToken,
@@ -13,17 +16,15 @@ import { getUserByEmail, hashPassword, verifyPassword } from "@/server/helpers";
 import { userTable, verificationTokenTable } from "@/server/db/schema";
 import {
   NewVerificationSchema,
-  UserLogInSchema,
+  UserSignInSchema,
   UserSignUpSchema,
 } from "@/lib/schema";
 // TYPES
 import type {
   NewVerificationType,
-  UserLogInType,
+  UserSignInType,
   UserSignUpType,
 } from "@/lib/schema";
-import { sendVerificationEmail } from "@/server/helpers/email";
-import { eq } from "drizzle-orm";
 
 export async function signUp(
   payload: UserSignUpType,
@@ -117,10 +118,10 @@ export async function newVerification(
   return { status: "SUCCESS", message: "Email Verified" };
 }
 
-export async function logIn(
-  payload: UserLogInType,
-): Promise<UserLogInStatusType> {
-  const validatedPayload = UserLogInSchema.safeParse(payload);
+export async function signIn(
+  payload: UserSignInType,
+): Promise<UserSignInStatusType> {
+  const validatedPayload = UserSignInSchema.safeParse(payload);
 
   if (!validatedPayload.success) {
     return { status: "FAILED", message: "Unable to login." };
@@ -171,4 +172,25 @@ export async function logIn(
   } catch (e) {
     return { status: "FAILED", message: "Error occoured." };
   }
+}
+
+export async function signOut() {
+  const { session } = await validateRequest();
+
+  if (!session) {
+    return {
+      error: "Unauthorized",
+    };
+  }
+
+  await lucia.invalidateSession(session.id);
+
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes,
+  );
+
+  return redirect("/sign-in");
 }

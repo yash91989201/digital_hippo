@@ -2,7 +2,7 @@
 import Link from "next/link";
 // UTILS
 import { buttonVariants } from "@/components/ui/button";
-// CUSTOM COMPONENTS
+// UI
 import {
   Card,
   CardContent,
@@ -23,7 +23,7 @@ export default function AuthCardWrapper({
     <Card className="w-[96vw] border-0 shadow-none md:max-w-[480px]">
       <CardHeader className="flex flex-col items-center justify-center gap-y-3">
         <Link href="/">
-          <Icons.logo className="h-18 w-18 lg:h-28 lg:w-28" />
+          <Icons.logo className="h-16 w-16 lg:h-28 lg:w-28" />
         </Link>
         <p className="text-xl font-semibold">{headerLabel}</p>
       </CardHeader>

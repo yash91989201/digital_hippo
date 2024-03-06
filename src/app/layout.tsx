@@ -26,6 +26,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await validateRequest();
+
   return (
     <html lang="en" className="h-full">
       <body
@@ -34,7 +35,7 @@ export default async function RootLayout({
         <TRPCReactProvider cookies={cookies().toString()}>
           <SessionProvider user={user}>
             <main className="relative flex min-h-screen flex-col">
-              <Navbar />
+              <Navbar user={user.user} />
               <div className="flex-1 flex-grow">{children}</div>
             </main>
           </SessionProvider>

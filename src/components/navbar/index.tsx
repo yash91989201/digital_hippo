@@ -1,19 +1,18 @@
-"use client";
 import Link from "next/link";
-// CUSTOM HOOKS
-import useCurrentUser from "@/hooks/use-current-user";
 // UTILS
 import { buttonVariants } from "@/components/ui/button";
+// TYPES
+import type { User } from "lucia";
+// UI
+import { Icons } from "@/components/shared/icons";
+import { Separator } from "@/components/ui/separator";
 // CUSTOM COMPONENTS
 import Cart from "@/components/navbar/cart";
-import { Icons } from "@/components/shared/icons";
 import NavItems from "@/components/navbar/nav-items";
-import { Separator } from "@/components/ui/separator";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import UserAccountMenu from "@/components/navbar/user-account-menu";
 
-export default function Navbar() {
-  const user = useCurrentUser();
-
+export default function Navbar({ user }: { user: User | null }) {
   return (
     <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
       <header className="relative bg-white">
@@ -36,20 +35,20 @@ export default function Navbar() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {user == null && (
+                  {!user && (
                     <>
                       <Link
-                        href="/log-in"
+                        href="/sign-in"
                         className={buttonVariants({ variant: "ghost" })}
                       >
-                        Log In
+                        Sign In
                       </Link>
                       <Separator orientation="vertical" className="h-6 " />
                     </>
                   )}
 
                   {user ? (
-                    <p></p>
+                    <UserAccountMenu user={user} />
                   ) : (
                     <Link
                       href="/sign-up"

@@ -11,7 +11,7 @@ export const PUBLIC_ROUTES = ["/", "/auth/new-verification"];
  * @type {string[]}
  */
 export const AUTH_ROUTES = [
-  "/log-in",
+  "/sign-in",
   "/sign-up",
   "/new-verification",
   "/error",
@@ -23,4 +23,4 @@ export const AUTH_ROUTES = [
  * The default redirect path after logging in as USER role
  * @type {string}
  */
-export const DEFAULT_USER_REDIRECT = "/quizzes";
+export const DEFAULT_USER_REDIRECT = "/";

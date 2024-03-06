@@ -10,7 +10,7 @@ import { UserSignUpSchema } from "@/lib/schema";
 // TYPES
 import type { SubmitHandler } from "react-hook-form";
 import type { UserSignUpType } from "@/lib/schema";
-// CUSTOM COMPONENTS
+// UI
 import {
   Form,
   FormControl,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+// CUSTOM COMPONENTS
 import AuthCardWrapper from "@/components/shared/auth-card-wrapper";
 // ICONS
 import { Loader2 } from "lucide-react";
@@ -28,7 +29,13 @@ export default function SignUpForm() {
   const router = useRouter();
 
   const signUpForm = useForm<UserSignUpType>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
     resolver: zodResolver(UserSignUpSchema),
+    shouldUseNativeValidation: true,
   });
   const { control, handleSubmit, formState } = signUpForm;
 
@@ -38,8 +45,8 @@ export default function SignUpForm() {
     if (actionResponse.status === "SUCCESS") {
       toast.success(actionResponse.message);
       setTimeout(() => {
-        router.replace("/log-in");
-      }, 3000);
+        router.replace("/sign-in");
+      }, 1000);
     }
     if (actionResponse.status === "FAILED") {
       toast.error(actionResponse.message);
@@ -49,8 +56,8 @@ export default function SignUpForm() {
   return (
     <AuthCardWrapper
       headerLabel="Create an account."
-      backButtonLabel="Already have an account? Log In"
-      backButtonHref="/log-in"
+      backButtonLabel="Already have an account? Sign In"
+      backButtonHref="/sign-in"
     >
       <Form {...signUpForm}>
         <form className="space-y-3" onSubmit={handleSubmit(signUpAction)}>
