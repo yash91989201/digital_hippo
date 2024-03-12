@@ -3,11 +3,14 @@ import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
-
+// PROVIDERS
 import { TRPCReactProvider } from "@/trpc/react";
-import Navbar from "@/components/navbar";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 import SessionProvider from "@/providers/SessionProvider";
+// UTILS
 import { validateRequest } from "@/lib/auth";
+// CUSTOM COMPONENTS
+import Navbar from "@/components/navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,10 +37,12 @@ export default async function RootLayout({
       >
         <TRPCReactProvider cookies={cookies().toString()}>
           <SessionProvider user={user}>
-            <main className="relative flex min-h-screen flex-col">
-              <Navbar user={user.user} />
-              <div className="flex-1 flex-grow">{children}</div>
-            </main>
+            <EdgeStoreProvider>
+              <main className="relative flex min-h-screen flex-col">
+                <Navbar user={user.user} />
+                <div className="flex-1 flex-grow">{children}</div>
+              </main>
+            </EdgeStoreProvider>
           </SessionProvider>
           <Toaster richColors theme="light" />
         </TRPCReactProvider>

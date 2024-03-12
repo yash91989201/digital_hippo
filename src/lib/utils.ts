@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -21,4 +22,17 @@ export function formatPrice(
     notation,
     maximumFractionDigits: 2,
   }).format(numericPrice);
+}
+
+export function fieldActionToast(action?: {
+  status: "SUCCESS" | "FAILED";
+  message: string;
+}) {
+  if (action !== undefined) {
+    if (action.status === "SUCCESS") {
+      toast.success(action.message);
+    } else {
+      toast.error(action.message);
+    }
+  }
 }

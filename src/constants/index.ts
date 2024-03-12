@@ -3,7 +3,7 @@ import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 export const PRODUCT_CATEGORIES = [
   {
     label: "UI Kits",
-    value: "ui_kits" as const,
+    value: "UI_KITS" as const,
     featured: [
       {
         name: "Editor picks",
@@ -24,7 +24,7 @@ export const PRODUCT_CATEGORIES = [
   },
   {
     label: "Icons",
-    value: "icons" as const,
+    value: "ICONS" as const,
     featured: [
       {
         name: "Favorite Icon Picks",
@@ -44,6 +44,11 @@ export const PRODUCT_CATEGORIES = [
     ],
   },
 ];
+
+export const PRODUCT_CATEGORIES_LABEL = {
+  UI_KITS: "UI Kits",
+  ICONS: "Icons",
+};
 
 export const PERKS = [
   {
@@ -65,3 +70,31 @@ export const PERKS = [
     Icon: Leaf,
   },
 ];
+
+// 5MB per file is allowed
+export const MAX_FILE_SIZE = 1024 * 1024 * 5;
+export const MAX_FILE_UPLOAD_LIMIT = 5;
+export const ACCEPTED_FILE_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/svg+xml",
+  "image/tiff",
+  "image/bmp",
+  "image/x-icon",
+];
+
+export const MAX_IMAGE_SIZE = 1024 * 1024 * 5;
+export const MAX_IMAGE_UPLOAD_LIMIT = 1024 * 1024 * 5;
+
+export const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/png"];
+
+export const DEFAULT_PRODUCT_REEL_LIMIT = 5;
+
+export const PRODUCT_PAGE_BREADCRUMBS = [
+  { id: 1, name: "Home", href: "/" },
+  { id: 2, name: "Products", href: "/products" },
+];
+
+export const TRANSACTION_FEE = 80;

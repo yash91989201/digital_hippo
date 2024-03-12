@@ -46,12 +46,18 @@ export async function signUp(
 
   const hashedPassword = await hashPassword(password);
 
+  const adminAccountExists =
+    (await db.query.userTable.findFirst({
+      where: eq(userTable.role, "ADMIN"),
+    })) !== undefined;
+
   try {
     const [insertUserQuery] = await db.insert(userTable).values({
       id: userId,
       email,
       name,
       password: hashedPassword,
+      role: adminAccountExists ? "USER" : "ADMIN",
     });
 
     if (insertUserQuery.affectedRows === 0) {

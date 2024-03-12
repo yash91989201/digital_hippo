@@ -11,9 +11,11 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    RESEND_API_KEY: z.string().min(1),
     SITE_URL: z.string().url(),
+    RESEND_API_KEY: z.string().min(1),
     MAIL_SENDER_ADDRESS: z.string().email(),
+    EDGE_STORE_ACCESS_KEY: z.string(),
+    EDGE_STORE_SECRET_KEY: z.string(),
   },
 
   /**
@@ -35,7 +37,8 @@ export const env = createEnv({
     MAIL_SENDER_ADDRESS: process.env.MAIL_SENDER_ADDRESS,
     DATABASE_URL: process.env.DATABASE_URL,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    EDGE_STORE_ACCESS_KEY: process.env.EDGE_STORE_ACCESS_KEY,
+    EDGE_STORE_SECRET_KEY: process.env.EDGE_STORE_SECRET_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

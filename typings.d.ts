@@ -1,6 +1,6 @@
 type FormInitialType<ErrorsType> = {
   status: "UNINITIALIZED";
-  errors: ErrorsType;
+  errors?: ErrorsType;
   message: string;
 };
 
@@ -44,6 +44,42 @@ type NewVerificationStatusType =
   | FormInitialType<NewVerificationErrorsType>
   | FormSuccessType
   | FormFailType<NewVerificationErrorsType>;
+
+type TableActionStatusType = {
+  insert?: {
+    status: "SUCCESS" | "FAILED";
+    message: string;
+  };
+  update?: {
+    status: "SUCCESS" | "FAILED";
+    message: string;
+  };
+  delete?: {
+    status: "SUCCESS" | "FAILED";
+    message: string;
+  };
+};
+
+type CreateProductInitialType = {
+  status: "INITIAL";
+};
+type CreateProductSuccessType = {
+  status: "SUCCESS";
+  message: string;
+  fields?: {
+    productFiles?: TableActionStatusType;
+    productImages?: TableActionStatusType;
+  };
+};
+type CreateProductFailType = {
+  status: "FAILED";
+  message: string;
+};
+
+type CreateProductStatusType =
+  | CreateProductInitialType
+  | CreateProductSuccessType
+  | CreateProductFailType;
 
 type AuthCardWrapperProps = {
   children: React.ReactNode;

@@ -1,10 +1,10 @@
 "use client";
+import Link from "next/link";
 // ACTIONS
 import { signOut } from "@/server/actions/auth";
 // TYPES
 import type { User } from "lucia";
 // UI
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function UserAccountMenu({ user }: { user: User }) {
   const signOutAction = async () => {
@@ -30,7 +31,9 @@ export default function UserAccountMenu({ user }: { user: User }) {
       <DropdownMenuContent align="end" sideOffset={6}>
         <DropdownMenuLabel>Hi, {user.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Seller Dashboard</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href="/sell">Seller Dashboard</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
         <DropdownMenuItem onClick={signOutAction}>Sign Out</DropdownMenuItem>

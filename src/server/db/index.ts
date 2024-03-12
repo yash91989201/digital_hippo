@@ -9,7 +9,7 @@ export const db = drizzle(
   mysql.createPool({
     uri: env.DATABASE_URL,
   }),
-  { schema, mode: "default" },
+  { schema, mode: "default", logger: true },
 );
 
 export const luciaDbAdapter = new DrizzleMySQLAdapter(

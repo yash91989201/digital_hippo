@@ -1,0 +1,1 @@
+ALTER TABLE `product` ADD `created_at` datetime NOT NULL;

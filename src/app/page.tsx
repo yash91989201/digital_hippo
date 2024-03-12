@@ -4,6 +4,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 // CONSTANTS
 import { PERKS } from "@/constants";
+import ProductReel from "@/components/shared/product-reel";
 
 export default async function Home() {
   return (
@@ -25,7 +26,11 @@ export default async function Home() {
             <Button variant="secondary">Our quality promise &rarr;</Button>
           </div>
         </div>
-        {/* TODO: list products */}
+        <ProductReel
+          query={{ sort: "desc", limit: 4 }}
+          title="Brand new"
+          href="/products"
+        />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-gray-50">
         <MaxWidthWrapper className="py-20">

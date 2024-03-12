@@ -116,7 +116,7 @@ export default function SignInForm() {
           </Button>
 
           <div className="relative py-6">
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1.5  text-gray-500">
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1.5  text-xs text-muted-foreground">
               OR
             </span>
             <Separator orientation="horizontal" />
