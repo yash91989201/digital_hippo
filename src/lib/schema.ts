@@ -39,8 +39,13 @@ export const NewVerificationSchema = z.object({
 });
 
 export const CreateProductSchema = ProductSchema.extend({
-  productFiles: z.array(FileSchema).min(1),
-  productImages: z.array(ImageSchema),
+  productFiles: z
+    .array(FileSchema)
+    .min(1, { message: "At least one product file is required" }),
+  productImages: z
+    .array(ImageSchema)
+    .min(1, { message: "At least one product image is required" })
+    .max(2, { message: "Upto 2 images are allowed" }),
 });
 
 export const AddFileSchema = z.object({
@@ -71,6 +76,10 @@ export const CreateSessionInput = z.object({
   productIds: z.array(z.string()),
 });
 
+export const PollOrderStatusInput = z.object({
+  orderId: z.string(),
+});
+
 export type UserType = z.infer<typeof UserSchema>;
 export type FileType = z.infer<typeof FileSchema>;
 export type ImageType = z.infer<typeof ImageSchema>;
@@ -78,7 +87,6 @@ export type ProductType = z.infer<typeof ProductSchema>;
 export type ProductFileType = z.infer<typeof ProductFileSchema>;
 export type ProductImageType = z.infer<typeof ProductImageSchema>;
 export type OrderType = z.infer<typeof OrderSchema>;
-export type OrderProductType = z.infer<typeof OrderProductsSchema>;
 
 export type UserSignUpType = z.infer<typeof UserSignUpSchema>;
 export type UserSignInType = z.infer<typeof UserSignInSchema>;
@@ -109,4 +117,16 @@ export type CartStoreType = {
   addItem: (product: CartProductType) => void;
   removeItem: (productId: string) => void;
   clearCart: () => void;
+};
+
+export type OrderProductType = ProductType & {
+  productImages: ProductImageType[];
+  productFiles: ProductFileType[];
+};
+
+export type ReceiptEmailProps = {
+  email: string;
+  date: Date;
+  orderId: string;
+  products: OrderProductType[];
 };

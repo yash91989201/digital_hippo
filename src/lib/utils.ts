@@ -24,6 +24,15 @@ export function formatPrice(
   }).format(numericPrice);
 }
 
+export function formatDate(date: Date): string {
+  const formattedDate = new Intl.DateTimeFormat("en-IN", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+  return formattedDate;
+}
+
 export function fieldActionToast(action?: {
   status: "SUCCESS" | "FAILED";
   message: string;

@@ -212,7 +212,7 @@ export const orderTableRelations = relations(orderTable, ({ one, many }) => ({
 }));
 
 export const orderProductTable = mysqlTable(
-  "order_products",
+  "order_product",
   {
     // FOREIGN KEY RELATIONS
     orderId: varchar("order_id", {

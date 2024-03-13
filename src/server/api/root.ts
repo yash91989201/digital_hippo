@@ -1,6 +1,8 @@
-import { mediaRouter } from "@/server/api/routers/media";
-import { productRouter } from "@/server/api/routers/product";
+// UTILS
 import { createTRPCRouter } from "@/server/api/trpc";
+import { mediaRouter } from "@/server/api/routers/media";
+import { paymentRouter } from "@/server/api/routers/payment";
+import { productRouter } from "@/server/api/routers/product";
 
 /**
  * This is the primary router for your server.
@@ -9,6 +11,7 @@ import { createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
   media: mediaRouter,
   product: productRouter,
+  payment: paymentRouter,
 });
 
 // export type definition of API

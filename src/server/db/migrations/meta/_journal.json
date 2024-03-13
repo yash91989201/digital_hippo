@@ -78,6 +78,13 @@
       "when": 1710048513561,
       "tag": "0010_faulty_tana_nile",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1710216562913,
+      "tag": "0011_rare_tusk",
+      "breakpoints": true
     }
   ]
 }

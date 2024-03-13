@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 // UTILS
 import { api } from "@/trpc/react";
 // TYPES
@@ -27,11 +27,6 @@ export default function ProductFilesField() {
   const { data: userFiles = [] } = api.media.getUserFiles.useQuery();
   const { control } = useFormContext<CreateProductType>();
 
-  const { append } = useFieldArray({
-    name: "productFiles",
-    control,
-  });
-
   return (
     <FormField
       control={control}
@@ -42,14 +37,13 @@ export default function ProductFilesField() {
           <Select
             onValueChange={(value) => {
               const selectedFile = userFiles.find((file) => file.id === value)!;
-              append(selectedFile);
               field.onChange([selectedFile]);
             }}
           >
             <FormControl>
               <div className="flex gap-3">
                 <SelectTrigger className="h-14">
-                  <SelectValue placeholder="Select file(s) for new product" />
+                  <SelectValue placeholder="Select file for new product" />
                 </SelectTrigger>
                 <NewFilesForm />
               </div>

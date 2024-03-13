@@ -8,13 +8,26 @@ import { useCart } from "@/hooks/use-cart";
 // UI
 import { Button } from "@/components/ui/button";
 // ICONS
-import { Check, X } from "lucide-react";
+import { Check, Loader2, X } from "lucide-react";
 // CONSTANTS
 import { PRODUCT_CATEGORIES_LABEL, TRANSACTION_FEE } from "@/constants";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { items, removeItem } = useCart();
+  const productIds = items.map((item) => item.id);
   const cartTotal = items.reduce((total, { price }) => total + price, 0);
+
+  const router = useRouter();
+  const { mutate: createCheckoutSession, isLoading } =
+    api.payment.createSession.useMutation({
+      onSuccess({ url }) {
+        if (url) {
+          router.push(url);
+        }
+      },
+    });
 
   return (
     <div className="bg-white">
@@ -159,14 +172,14 @@ export default function CartPage() {
 
             <div className="mt-6">
               <Button
-                disabled={items.length === 0}
-                // onClick={() => createCheckoutSession({ productIds })}
+                disabled={items.length === 0 || isLoading}
+                onClick={() => createCheckoutSession({ productIds })}
                 className="w-full"
                 size="lg"
               >
-                {/* {isLoading ? (
+                {isLoading ? (
                   <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
-                ) : null} */}
+                ) : null}
                 Checkout
               </Button>
             </div>

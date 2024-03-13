@@ -86,7 +86,7 @@ const ProductPlaceholder = ({ cardCount }: { cardCount: number }) => {
   const cards = new Array<null>(cardCount).fill(null);
   return (
     <div className="flex w-full items-center justify-between">
-      {cards.map((index) => (
+      {cards.map((value, index) => (
         <Card key={index} className="w-full max-w-[240px] border-0 shadow-none">
           <CardContent className="p-0">
             <Skeleton className="h-52 w-full rounded-md" />
